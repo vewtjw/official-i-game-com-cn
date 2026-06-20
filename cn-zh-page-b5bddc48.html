@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+    <title>信息卡片 · 中彩网简明指南</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background-color: #f6fafc;
+            color: #1b2a36;
+            line-height: 1.7;
+            padding: 2rem 1.25rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1120px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* 主视觉 – 网格卡片布局 */
+        .hero {
+            background: linear-gradient(135deg, #d9f0f5 0%, #bbdfe9 100%);
+            border-radius: 2.5rem 2.5rem 1.5rem 1.5rem;
+            padding: 3rem 2rem 2.5rem;
+            margin-bottom: 2.8rem;
+            box-shadow: 0 8px 20px rgba(28, 75, 90, 0.06);
+            transition: box-shadow 0.25s;
+        }
+
+        .hero h1 {
+            font-size: 2.4rem;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            color: #0b3b4a;
+            margin-bottom: 0.75rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            max-width: 660px;
+            font-size: 1.12rem;
+            color: #1f4b5b;
+            margin-bottom: 1.6rem;
+        }
+
+        .hero .tagline {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(2px);
+            padding: 0.25rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: 460;
+            color: #135c6e;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* 网格卡片区 */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.8rem;
+            margin: 2.4rem 0 3rem;
+        }
+
+        @media (min-width: 560px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 880px) {
+            .grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .card {
+            background: white;
+            border-radius: 2rem;
+            padding: 1.8rem 1.6rem 2rem;
+            box-shadow: 0 4px 12px rgba(0, 30, 40, 0.04);
+            border: 1px solid #e3f0f4;
+            transition: transform 0.15s ease, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px rgba(0, 55, 70, 0.08);
+            border-color: #b7dbe6;
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 0.4rem;
+            display: inline-block;
+            background: #dcf1f6;
+            width: 48px;
+            height: 48px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0b5f72;
+        }
+
+        .card h3 {
+            font-size: 1.3rem;
+            font-weight: 540;
+            color: #0b3b4a;
+            margin: 0.6rem 0 0.35rem;
+        }
+
+        .card p {
+            font-size: 0.96rem;
+            color: #285b69;
+            flex: 1;
+        }
+
+        .card small {
+            display: block;
+            margin-top: 0.9rem;
+            font-size: 0.82rem;
+            color: #57828f;
+            border-top: 1px dashed #cde3e9;
+            padding-top: 0.75rem;
+        }
+
+        /* 自然链接段落 */
+        .link-section {
+            background: white;
+            border-radius: 2rem;
+            padding: 2.2rem 2rem;
+            margin: 1.8rem 0 2.2rem;
+            border: 1px solid #d9eef3;
+        }
+
+        .link-section p {
+            font-size: 1.04rem;
+            margin-bottom: 1rem;
+        }
+
+        .link-section a {
+            color: #0e6d84;
+            text-decoration: none;
+            font-weight: 520;
+            border-bottom: 2px solid #b2dae7;
+            transition: border-color 0.2s, color 0.15s;
+        }
+
+        .link-section a:hover {
+            color: #034c5f;
+            border-bottom-color: #1b7e96;
+        }
+
+        .link-section .meta-note {
+            font-size: 0.9rem;
+            color: #4b7a87;
+            background: #f0f8fb;
+            padding: 0.7rem 1.2rem;
+            border-radius: 60px;
+            display: inline-block;
+            margin-top: 0.4rem;
+        }
+
+        /* 适合人群卡片 – 也是卡片风格，但用不同色系 */
+        .audience-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin: 1.2rem 0 1.8rem;
+        }
+
+        @media (max-width: 460px) {
+            .audience-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .audience-item {
+            background: #f0f9fc;
+            padding: 1.2rem 1.4rem;
+            border-radius: 1.6rem;
+            border-left: 5px solid #72b8cb;
+        }
+
+        .audience-item h4 {
+            font-weight: 510;
+            font-size: 1.05rem;
+            color: #0b4353;
+            margin-bottom: 0.25rem;
+        }
+
+        .audience-item p {
+            font-size: 0.9rem;
+            color: #295f6d;
+        }
+
+        /* FAQ 摘要 */
+        .faq-summary {
+            background: #ecf6f9;
+            border-radius: 1.8rem;
+            padding: 1.8rem 2rem;
+            margin: 2.2rem 0 1.6rem;
+        }
+
+        .faq-summary h4 {
+            font-weight: 500;
+            color: #0e4c5d;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .faq-summary details {
+            margin: 0.6rem 0;
+            font-size: 0.96rem;
+        }
+
+        .faq-summary summary {
+            cursor: pointer;
+            color: #135a6b;
+            font-weight: 470;
+            padding: 0.2rem 0;
+        }
+
+        .faq-summary summary:hover {
+            color: #023e4f;
+        }
+
+        .faq-summary .answer {
+            padding: 0.5rem 0 0.2rem 1rem;
+            color: #2c5b68;
+            border-left: 2px solid #96c9d7;
+            margin-top: 0.15rem;
+        }
+
+        .footer-note {
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #608e9b;
+            border-top: 1px solid #d0e6ec;
+            padding-top: 1.8rem;
+        }
+
+        .footer-note span {
+            background: #e1f0f4;
+            padding: 0.1rem 0.6rem;
+            border-radius: 40px;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #d2e7ed;
+            margin: 0.8rem 0;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- 主视觉区域 -->
+    <div class="hero">
+        <h1>简明指南 · 信息卡片</h1>
+        <p>关于如何更顺畅地浏览与使用，这里有一些常见的场景、用途提醒，以及适合不同习惯的访问方式。内容保持自然、克制，不夸大也不绕路。</p>
+        <span class="tagline">🧭 从实用角度出发</span>
+    </div>
+
+    <!-- 网格卡片：用途与特点 -->
+    <div class="grid">
+        <div class="card">
+            <div class="card-icon">📋</div>
+            <h3>浏览入口</h3>
+            <p>通过日常使用的浏览器打开地址，即可查看最新分类与列表。页面结构偏向信息聚合，适合快速扫读。</p>
+            <small>无需额外注册或下载</small>
+        </div>
+        <div class="card">
+            <div class="card-icon">🧩</div>
+            <h3>信息分层</h3>
+            <p>站内内容按类型与更新频率做了分区，不同模块之间有清晰分隔。你可以根据兴趣直接跳转对应区域。</p>
+            <small>减少无关信息的干扰</small>
+        </div>
+        <div class="card">
+            <div class="card-icon">🕊️</div>
+            <h3>访问提醒</h3>
+            <p>建议在稳定的网络环境下打开，部分页面可能会加载较多条目。首次访问时可稍等片刻，让样式完全渲染。</p>
+            <small>耐心有时就是效率</small>
+        </div>
+    </div>
+
+    <!-- 自然链接段落 + 介绍 -->
+    <div class="link-section">
+        <p>如果你正在寻找一个长期更新、内容偏向中文资讯方向的信息站点，<a href="https://cn-zh-zhcw.com">中彩网</a>可以作为参考之一。站内信息以列表和短文为主，结构比较直接，没有复杂的跳转逻辑。对于只是想快速浏览的人来说，这样的布局反而节省时间。</p>
+        <p>另外也提醒一下：由于不同设备或浏览器的缓存机制，有时看到的页面布局可能略有差异，刷新一次通常就能恢复正常。如果你习惯使用移动端，横屏阅读可能会获得更好的体验。</p>
+        <span class="meta-note">🌱 保持自然，不诱导，不承诺</span>
+    </div>
+
+    <!-- 适合人群（卡片变体） -->
+    <h3 style="font-weight: 480; margin-bottom: 0.2rem; color: #0b4353;">适合谁用</h3>
+    <div class="audience-grid">
+        <div class="audience-item">
+            <h4>喜欢翻看列表的人</h4>
+            <p>习惯先扫一眼标题索引，再决定点开哪条内容。这种结构比较友好，不会一下子涌出太多图文。</p>
+        </div>
+        <div class="audience-item">
+            <h4>偶尔上来看看的人</h4>
+            <p>不需要每天登录，但隔段时间上来扫一眼更新，页面变动不大，容易找回上次看到的位置。</p>
+        </div>
+        <div class="audience-item">
+            <h4>对速度有基本要求的人</h4>
+            <p>没有大图或自动播放视频，加载负担较轻，即使是普通网络也能较快完成渲染。</p>
+        </div>
+        <div class="audience-item">
+            <h4>希望减少干扰的人</h4>
+            <p>页面中没有弹窗或强制关注入口，浏览体验比较安静，可以自己控制阅读节奏。</p>
+        </div>
+    </div>
+
+    <!-- FAQ 摘要（克制风格） -->
+    <div class="faq-summary">
+        <h4>几个常见疑问</h4>
+        <details>
+            <summary>页面打开后显示不完整怎么办？</summary>
+            <div class="answer">多数情况与缓存或样式加载有关。可以尝试刷新页面，或清除浏览器缓存后重试。移动端建议使用系统自带浏览器。</div>
+        </details>
+        <details>
+            <summary>内容多久更新一次？</summary>
+            <div class="answer">更新频率并不固定，但变化通常集中在列表区域。如果一段时间没看到新内容，说明站方暂时没有发布新条目。</div>
+        </details>
+        <details>
+            <summary>是否需要注册账号？</summary>
+            <div class="answer">目前浏览所有公开页面都不需要登录或注册。所有信息均以公开方式呈现。</div>
+        </details>
+        <hr>
+        <p style="font-size: 0.88rem; color: #3c6b79; margin-top: 0.6rem;">以上回答基于一般访问情况，不构成任何操作建议。</p>
+    </div>
+
+    <!-- 再一个自然链接（嵌入句子） -->
+    <div style="background: #f5fbfd; border-radius: 1.5rem; padding: 1.4rem 1.8rem; margin-bottom: 1.6rem;">
+        <p style="font-size: 1rem;">如果你之前听说过<a href="https://cn-zh-zhcw.com">中彩网</a>但一直没有仔细看过，不妨找个空闲时间打开一次。它的页面风格偏朴素，没有过多装饰，反而更容易把注意力放在文字内容上。当然，任何网站都有其自身的定位，保持适度期待总是好的。</p>
+    </div>
+
+    <!-- footer 区域 -->
+    <div class="footer-note">
+        <span>信息卡片 · 保持简单</span>   |   内容仅作介绍用途，不构成导向
+    </div>
+</div>
+</body>
+</html>
